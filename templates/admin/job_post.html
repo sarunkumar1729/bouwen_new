@@ -1,0 +1,94 @@
+{% extends "includes/admin_base.html" %}
+{% load static %}
+{% block title %}contact us{% endblock title %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/jobPost.css' %}">
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Scroll-Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+{% endblock head %}
+
+{% block content %}
+    <section class="JobPost">
+        <div class="container">
+            <form action="{% url 'jobs' %}" data-aos="fade-right" data-aos-delay="300" data-aos-duration='1000' method='POST'>
+                {% csrf_token %}
+                <div class="row">
+                    <h2>Job Listings Administration</h2>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Job Title</label>
+                            <input type="text" name="job_title">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Company Name</label>
+                            <input type="text" name="company_name">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Location</label>
+                            <input type="text" name="location">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Full-time or Part-time</label>
+                            <select name="mode" id="">
+                                <option value="full-time">Full-time</option>
+                                <option value="part-time">Part-time</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Description</label>
+                            <input type="text" name="description">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Benefits</label>
+                            <input type="text" name="benefits">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Experience Required</label>
+                            <input type="text" name="experience_required">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Skills Required</label>
+                            <input type="text" name="skills_required">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Starting Salary</label>
+                            <input type="number" name="starting_salary">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Ending Salary</label>
+                            <input type="number" name="ending_salary">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Languages</label>
+                            <input type="text" name="languages">
+                        </div>
+                        {% comment %} <div class="form-group">
+                            <label for="">Resume</label>
+                            <input type="file" name="resume">
+                        </div> {% endcomment %}
+                        <button type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <table>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for job in jobs %}
+        <tr>
+            <td>{{job.id}}</td>
+            <td>{{job.job_title}}</td>
+            <td><a>CANDIDATES</a></td>
+            <td>DELETE<a></a></td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock content %}

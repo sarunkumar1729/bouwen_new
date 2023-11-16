@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+</head>
+<body>
+    {% for j in applied_jobs %}
+        <h1>{{j.job.job_title}}</h1>
+        <h1>{{j.applied_date}}</h1>
+    {% endfor %}
+    <hr>
+    {% for job in jobs %}
+        <h1>{{job.job_title}}</h1>
+        <h1>{{job.company_name}}</h1>
+        <h1>{{job.location}}</h1>
+        <h1>{{job.mode}}</h1>
+        <h1>{{job.description}}</h1>
+        <h1>{{job.experience_required}}</h1>
+        <h1>{{job.skills_required}}</h1>
+        <h1>{{job.starting_salary}}</h1>
+        <h1>{{job.ending_salary}}</h1>
+        <h1>{{job.languages}}</h1>
+        <a href="{% url 'applyjob' job.id %}">APPLY</a>
+    {% endfor %}
+</body>
+</html>

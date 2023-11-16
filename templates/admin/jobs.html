@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+</head>
+
+<body>
+    <h2>Job Application Form</h2>
+    <form action="{% url 'jobs' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Job Title -->
+        <label for="job_title">Job Title:</label>
+        <input type="text" id="job_title" name="job_title" required>
+        <br>
+
+        <!-- Company Name -->
+        <label for="company_name">Company Name:</label>
+        <input type="text" id="company_name" name="company_name" required>
+        <br>
+
+        <!-- Location -->
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required>
+        <br>
+
+        <!-- Mode -->
+        <label for="mode">Mode:</label>
+        <input type="text" id="mode" name="mode" required>
+        <br>
+
+        <!-- Description -->
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea>
+        <br>
+
+        <!-- Experience Required -->
+        <label for="experience_required">Experience Required:</label>
+        <input type="number" id="experience_required" name="experience_required" required>
+        <br>
+
+        <!-- Skills Required -->
+        <label for="skills_required">Skills Required:</label>
+        <input type="text" id="skills_required" name="skills_required" required>
+        <br>
+
+        <!-- Starting Salary -->
+        <label for="starting_salary">Starting Salary:</label>
+        <input type="number" id="starting_salary" name="starting_salary" required>
+        <br>
+
+        <!-- Ending Salary -->
+        <label for="ending_salary">Ending Salary:</label>
+        <input type="number" id="ending_salary" name="ending_salary" required>
+        <br>
+
+        <!-- Languages -->
+        <label for="languages">Languages:</label>
+        <input type="text" id="languages" name="languages" required>
+        <br>
+
+        <!-- Resume -->
+        <label for="resume">Resume:</label>
+        <input type="file" id="resume" name="resume" accept=".pdf, .doc, .docx" required>
+        <br>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Application</button>
+    </form>
+
+    {% if jobs %}
+        {% for job in jobs %}
+            <h3>{{job.job_title}}</h3>
+        {% endfor %}
+    {% endif %}
+</body>
+
+</html>
