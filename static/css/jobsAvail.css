@@ -1,0 +1,63 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+}
+
+/* jobsAvail-section starts */
+.jobsAvail {
+    height: 100%;
+    min-height: 80vh;
+    padding: 50px 0px;
+    overflow-x: hidden;
+    /* background-color: #718355; */
+    font-family: 'Poppins', sans-serif;
+}
+.jobsAvail .tableWrapper {
+    background-color: #e9f5db;
+    width: 95%;
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 20px 50px rgba(0,0,0,0.2);
+    overflow-x: scroll;
+}
+.jobsAvail h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.jobsAvail th {
+    font-weight: 600;
+}
+.jobsAvail td {
+    color: #333;
+}
+.jobsAvail table, th, td {
+    /* border: 2px solid rgb(190, 201, 38); */
+    font-size: 17px;
+    padding: 10px 0px 5px 10px;
+}
+
+
+@media(max-width :1024px) {
+    .jobsAvail table, th, td {
+        font-size: 15px;
+        padding: 10px 7px 10px 10px;
+    }
+}
+
+
+@media(max-width: 576px) {
+    section.JobPost form label{
+        font-size: 15px;
+    }
+    section.JobPost form input[type='file'] {
+        font-size: 15px;
+    }
+    section.JobPost form select {
+        font-size: 15px;
+    }
+}

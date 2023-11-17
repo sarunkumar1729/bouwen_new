@@ -76,19 +76,39 @@
             </form>
         </div>
     </section>
-    <table>
-        <tr>
-            <th></th>
-            <th></th>
+    <br><br>
+
+    <div class="table-responsive-lg ">
+        <table class="table table-bordered ">
+        <tr class="chg">
+            <th>ID</th>
+            <th>JOB TITLE</th>
+            <th>COMPANY</th>
+            <th>LOCATION</th>
+            <th>MODE</th>
+            <th>DESCRIPTION</th>
+            <th>EXPERIENCE</th>
+            <th>SKILLS</th>
+            <th>SALARY</th>
+            <th>LANGUAGES</th>
             <th></th>
         </tr>
         {% for job in jobs %}
         <tr>
             <td>{{job.id}}</td>
             <td>{{job.job_title}}</td>
-            <td><a>CANDIDATES</a></td>
-            <td>DELETE<a></a></td>
+            <td>{{job.company_name}}</td>
+            <td>{{job.location}}</td>
+            <td>{{job.mode}}</td>
+            <td>{{job.description}}</td>
+            <td>{{job.experience_required}}</td>
+            <td>{{job.skills_required}}</td>
+            <td>{{job.starting_salary}}-{{job.ending_salary}}</td>
+            <td>{{job.languages}}</td>
+            <td><a id="cand">CANDIDATES</a>|<a id="del">DELETE</a></td>
         </tr>
         {% endfor %}
     </table>
+</div>
+<br><br>
 {% endblock content %}

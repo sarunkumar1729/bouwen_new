@@ -12,16 +12,19 @@
     <section class="usersList">
         <div class="container">
             <div class="row"> 
-                <div class="col-12 col-md-10 mx-auto">
                     <h2 data-aos="fade-right" data-aos-delay="300" data-aos-duration='1000'>User Management</h2>
-                    <table data-aos="fade-left" data-aos-delay="300" data-aos-duration='1000'>
-                        <tr>
+                    
+                    <div class="table-responsive-lg ">
+                        <table class="table table-bordered ">
+                        <tr class="chg" >
                             <th>S.NO</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone1</th>
                             <th>Phone2</th>
                             <th>Photo</th>
+                            <th>CV</th>
+                            <th>JOBS</th>
                         </tr>
                         {% for candidate in candidates %}
                         <tr>
@@ -35,54 +38,16 @@
                                 {% else %}
                                     <td><img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' width='100px'></td>
                                 {% endif %}
-                            <td><a href="{% url 'userprofile' candidate.id %}">VIEW PROFILE</a></td>
+                            {% comment %} <td><a href="{% url 'userprofile' candidate.id %}">VIEW PROFILE</a></td> {% endcomment %}
+                            <td><a id="res" href="{{candidate.resume.url}}">RESUME</a></td>
+                            <td><a  id="res" href="{% url 'userprofile' candidate.id %}">JOBS</a></td>
                         </tr>
+
                         {% endfor %}
-                        {% comment %} <tr>
-                            <td>1</td>
-                            <td>Shareef</td>
-                            <td>dcshareeef@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>John</td>
-                            <td>john@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Amal</td>
-                            <td>amal@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Smith</td>
-                            <td>smith@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Arun</td>
-                            <td>arun@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Maxwell</td>
-                            <td>maxwell@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Suarez</td>
-                            <td>suarez@gmail.com</td>
-                            <td>Active <i class="bi bi-check2-all"></i></td>
-                        </tr> {% endcomment %}
                     </table>
                 </div>
             </div>
         </div>
     </section>
+    <br><br>
 {% endblock content %}

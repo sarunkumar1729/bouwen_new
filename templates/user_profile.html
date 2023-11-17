@@ -1,24 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Title Here</title>
-</head>
-<body>
-    <h1>USER</h1>
+{% extends "includes/admin_base.html" %}
+{% load static %}
+{% block title %}contact us{% endblock title %}
+{% block head %}
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Scroll-Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+{% endblock head %}
+{% block content %}
+<style>
+    h2{
+    background-color: #fefefe;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    }
+    .chg th{
+        color: #fefefe;
+    }
+</style>
+<h2 data-aos="fade-right" data-aos-delay="300" data-aos-duration='1000' >Applied Posts</h2>
+<br><br>
+
+
+<div class="table-responsive-lg ">
+    <table class="table table-bordered ">
+        <tr class="chg" style="background-color: #29544e;">
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>COMPANY</th>
+            <th>APPLIED DATE</th>
+        </tr>
     {% for job in jobs %}
-        <h1>{{job.job_title}}</h1>
-        <h1>{{job.company_name}}</h1>
-        <h1>{{job.location}}</h1>
-        <h1>{{job.mode}}</h1>
-        <h1>{{job.description}}</h1>
-        <h1>{{job.experience_required}}</h1>
-        <h1>{{job.skills_required}}</h1>
-        <h1>{{job.starting_salary}}</h1>
-        <h1>{{job.ending_salary}}</h1>
-        <h1>{{job.languages}}</h1>
-        <a href="{% url 'applyjob' job.id %}">APPLY</a>
+            <tr>
+            <td>{{job.job.id}}</td>
+            <td>{{job.job.job_title}}</td>
+            <td>{{job.job.company_name}}</td>
+            <td>{{job.applied_date}}</td>
+            </tr>
     {% endfor %}
-</body>
-</html>
+    </table>
+<br><br><br>
+{% endblock content %}
+

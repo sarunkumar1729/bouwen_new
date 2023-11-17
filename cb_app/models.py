@@ -10,6 +10,8 @@ class UsersProfile(models.Model):
     email=models.EmailField(null=True)
     phone1=models.CharField(max_length=255,null=True)
     phone2=models.CharField(max_length=255,null=True)
+    phone1_verified=models.BooleanField(default=False)
+    phone2_verified=models.BooleanField(default=False)
     current_address=models.CharField(max_length=255)
     permanant_address=models.CharField(max_length=255)
     Education=models.CharField(max_length=255)

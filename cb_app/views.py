@@ -2,10 +2,20 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from .models import Jobs,UsersProfile,Applications
+import vonage
+from django.contrib.auth.decorators import login_required
+
+from django.http import FileResponse, Http404
+from django.shortcuts import get_object_or_404
+from django.conf import settings
+
+import os
+
 # Create your views here.
 def index(request):
     print(request.user.username)
     return render(request, 'index.html')
+
 
 def about(request):
     return render(request, 'about.html')
@@ -35,6 +45,9 @@ def user_login(request):
         if user is not None:
             login(request,user)
             return redirect('index')
+        else:
+            return render(request, 'auth/login.html')
+
     else:
         return render(request, 'auth/login.html')
 
@@ -43,6 +56,7 @@ def python(request):
 
 
 #admin
+@login_required(login_url='adminlogin')
 def admin_index(request):
     return render(request,'admin/admin_index.html')
 
@@ -55,9 +69,12 @@ def admin_login(request):
         if (user is not None) and user.is_staff:
             login(request,user)
             return redirect('adminindex')
+        else:
+            return render(request,'admin/login.html')
     else:
         return render(request,'admin/login.html')
     
+@login_required(login_url='adminlogin')
 def jobs(request):
     jobs=Jobs.objects.all()
     if request.method=='POST':
@@ -87,7 +104,8 @@ def jobs(request):
         return render(request,'admin/job_post.html',{'jobs':jobs})
     else:
         return render(request,'admin/job_post.html',{'jobs':jobs})
-    
+
+ 
 def edit_profile(request):
         current_user=request.user
         if request.method=='POST':
@@ -121,12 +139,19 @@ def edit_profile(request):
             return redirect('profile')
         else:
             return render(request,'editProfile.html')
-
+        
+@login_required(login_url='login')
 def profile(request):
     current_user=request.user
-    profile=UsersProfile.objects.get(profile_user=current_user)
+    try:
+        profile=UsersProfile.objects.get(profile_user=current_user)
+    except:
+        profile=None
+    # print(profile.resume.url)
+    # print('helloooo')
     return render(request,'profile.html',{'profile':profile})
 
+@login_required(login_url='adminlogin')
 def users_list(request):
     candidates=UsersProfile.objects.all()
     return render(request,'admin/usersList.html',{'candidates':candidates})
@@ -135,6 +160,7 @@ def user_logout(request):
     logout(request)
     return redirect('index')
 
+@login_required(login_url='login')
 def jobs_available(request):
     jobs=Jobs.objects.all()
     current_user=request.user
@@ -142,6 +168,7 @@ def jobs_available(request):
     print(len(applied_jobs))
     return render(request,'jobs.html',{'jobs':jobs,'applied_jobs':applied_jobs})
 
+@login_required(login_url='/custom-login/')
 def apply_job(request,i):
     job=Jobs.objects.get(id=i)
     candidate=request.user
@@ -150,7 +177,54 @@ def apply_job(request,i):
     print('successfully applied for the job')
     return redirect('jobsavailable')
     
+@login_required(login_url='adminlogin')
 def user_profile(request,i):
     p=UsersProfile.objects.get(id=i)
-    jobs=Jobs.objects.filter(candidate=p.profile_user)
+    u=p.profile_user
+    jobs=Applications.objects.filter(candidate=u)
     return render(request,'user_profile.html',{'jobs':jobs})
+
+
+def verify1(request):
+    current_user=request.user
+    global profile
+    profile=UsersProfile.objects.get(profile_user=current_user)
+    phone=profile.phone1
+    global client
+    global verify
+    client = vonage.Client(key="479aaf01", secret="V3w3NMQNjnZqDKYS")
+    verify = vonage.Verify(client)
+
+    response = verify.start_verification(number=phone, brand="AcmeInc")
+    global REQUEST_ID
+    REQUEST_ID=response['request_id']
+
+    if response["status"] == "0":
+        print("Started verification request_id is %s" % (response["request_id"]))
+        return render(request,'verify.html')
+    else:
+        print("Error: %s" % response["error_text"])
+        return redirect('profile')
+    
+
+
+def verify2(request):
+    CODE=request.POST['code']
+
+    response = verify.check(REQUEST_ID, code=CODE)
+
+    if response["status"] == "0":
+        profile.phone1_verified=True
+        profile.save()
+        print("Verification successful, event_id is %s" % (response["event_id"]))
+        return redirect('profile')
+    else:
+        print("Error: %s" % response["error_text"])
+        msg='invalid otp'
+        return render(request,'verify.html',{'msg':msg})
+    
+# views.py
+
+
+
+
